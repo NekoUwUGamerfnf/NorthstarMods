@@ -74,6 +74,11 @@ void function ReloadMods( bool reloadorretry = false )
 }
 
 #if !UI
+	array<entity> function gn()
+	{
+		return GetNPCArray()
+	}
+
 	entity function gwep( entity ent )
 	{
 		return ent.GetActiveWeapon()
@@ -122,10 +127,6 @@ void function ReloadMods( bool reloadorretry = false )
 		NSBroadcastMessage( -1, toPlayer.GetPlayerIndex(), text, !withServerTag, false, whisper ? eChatMessageType.WHISPER : eChatMessageType.CHAT )
 	}
 
-	array<entity> function gn()
-	{
-		return GetNPCArray()
-	}
 #else
 	entity function glc()
 	{
@@ -238,12 +239,6 @@ void function ReloadMods( bool reloadorretry = false )
 				return false
 
 			if ( !EdgeTraceDropPoint( origin ) )
-				return false
-
-			if ( EntityInSolid( titan ) )
-				return false
-
-			if ( !NavMesh_IsPosReachableForAI( titan, origin ) )
 				return false
 
 			return true

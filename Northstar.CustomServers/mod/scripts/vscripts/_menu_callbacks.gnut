@@ -216,14 +216,14 @@ bool function ClientCommandCallback_RequestPilotLoadout( entity player, array<st
 	if ( !args.len() )
 	{
 		#if DEV
-			print( player + " RequestPilotLoadout " )
+			printt( player + " RequestPilotLoadout " )
 		#endif
 
 		return true
 	}
 
 	#if DEV
-		print( player + " RequestPilotLoadout " + args[ 0 ] )
+		printt( player + " RequestPilotLoadout " + args[ 0 ] )
 	#endif
 
 	if ( !GetCurrentPlaylistVarInt( "loadout_selection_enabled", 1 ) )
@@ -245,7 +245,7 @@ bool function ClientCommandCallback_RequestTitanLoadout( entity player, array<st
 		args.append( "" )
 
 	#if DEV
-		print( player + " RequestTitanLoadout " + args[ 0 ] )
+		printt( player + " RequestTitanLoadout " + args[ 0 ] )
 	#endif
 
 	if ( !GetCurrentPlaylistVarInt( "loadout_selection_enabled", 1 ) )
@@ -283,7 +283,7 @@ bool function ClientCommandCallback_SetPersistentLoadoutValue( entity player, ar
 	val = strip( val ) // remove any tailing whitespace
 
 	#if DEV
-		print( player + " SetPersistentLoadoutValue " + args0 + " " + args1 + " " + args2 + " " + val )
+		printt( player + " SetPersistentLoadoutValue " + args0 + " " + args1 + " " + args2 + " " + val )
 	#endif
 
 	if ( args.len() < 4 )
@@ -325,7 +325,7 @@ bool function ClientCommandCallback_SwapSecondaryAndWeapon3PersistentLoadoutData
 		args.append( "" )
 
 	#if DEV
-		print( player + " SwapSecondaryAndWeapon3PersistentLoadoutData " + args[ 0 ] )
+		printt( player + " SwapSecondaryAndWeapon3PersistentLoadoutData " + args[ 0 ] )
 	#endif
 
 	if ( !GetCurrentPlaylistVarInt( "loadout_selection_enabled", 1 ) )
@@ -365,7 +365,7 @@ bool function ClientCommandCallback_SetBurnCardPersistenceSlot( entity player, a
 		args.append( "" )
 
 	#if DEV
-		print( player + " SetBurnCardPersistenceSlot " + args[ 0 ] )
+		printt( player + " SetBurnCardPersistenceSlot " + args[ 0 ] )
 	#endif
 
 	if ( !GetCurrentPlaylistVarInt( "loadout_selection_enabled", 1 ) )
@@ -386,7 +386,7 @@ bool function ClientCommandCallback_SetBurnCardPersistenceSlot( entity player, a
 	else
 	{
 		#if DEV
-			print( player + " invalid ref " + args[ 0 ] )
+			printt( player + " invalid ref " + args[ 0 ] )
 		#endif
 
 		return false
@@ -402,7 +402,7 @@ bool function ClientCommandCallback_SetCallsignIcon( entity player, array<string
 		args.append( "" )
 
 	#if DEV
-		print( player + " SetCallsignIcon " + args[ 0 ] )
+		printt( player + " SetCallsignIcon " + args[ 0 ] )
 	#endif
 
 	if ( IsRefValidAndOfType( args[ 0 ], eItemTypes.CALLSIGN_ICON ) )
@@ -415,7 +415,7 @@ bool function ClientCommandCallback_SetCallsignIcon( entity player, array<string
 	else
 	{
 		#if DEV
-			print( player + " invalid ref " + args[ 0 ] )
+			printt( player + " invalid ref " + args[ 0 ] )
 		#endif
 
 		return false
@@ -430,7 +430,7 @@ bool function ClientCommandCallback_SetCallsignCard( entity player, array<string
 		args.append( "" )
 
 	#if DEV
-		print( player + " SetCallsignCard " + args[ 0 ] )
+		printt( player + " SetCallsignCard " + args[ 0 ] )
 	#endif
 
 	if ( IsRefValidAndOfType( args[ 0 ], eItemTypes.CALLING_CARD ) )
@@ -443,7 +443,7 @@ bool function ClientCommandCallback_SetCallsignCard( entity player, array<string
 	else
 	{
 		#if DEV
-			print( player + " invalid ref " + args[ 0 ] )
+			printt( player + " invalid ref " + args[ 0 ] )
 		#endif
 
 		return false
@@ -458,7 +458,7 @@ bool function ClientCommandCallback_SetFactionChoicePersistenceSlot( entity play
 		args.append( "" )
 
 	#if DEV
-		print( player + " SetFactionChoicePersistenceSlot " + args[ 0 ] )
+		printt( player + " SetFactionChoicePersistenceSlot " + args[ 0 ] )
 	#endif
 
 	if ( IsRefValidAndOfType( args[ 0 ], eItemTypes.FACTION ) )
@@ -471,7 +471,7 @@ bool function ClientCommandCallback_SetFactionChoicePersistenceSlot( entity play
 	else
 	{
 		#if DEV
-			print( player + " invalid ref " + args[ 0 ] )
+			printt( player + " invalid ref " + args[ 0 ] )
 		#endif
 
 		return false

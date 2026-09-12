@@ -27,6 +27,7 @@ global function DebugTestCustomDropshipSpawn
 global function PlayerSpawnDropship_RunSpawnCallbacks
 global function ClassicMP_TryPlayerIntroSpawn
 global function AddCallback_OnWaveSpawnDropshipSpawned
+global function GetDropshipIntroAnimation
 
 global array<string> dropshipIdleAnimsList = [
 	"Classic_MP_flyin_exit_playerA_idle",
@@ -386,7 +387,9 @@ bool function PlayerWillSpawnOnDropship( entity player )
 
 void function TryStartSpawnPlayersIntoDropship( array<entity> players )
 {
-	delaythread( GetAnimEventTime( DROPSHIP_MODEL, "dropship_classic_mp_flyin", "dropship_deploy" ) + 0.05 ) ClearDropshipSpawnPlayerList() // Clear out the players that are on this list after the window for spawning on the dropship has passed
+	string dropshipAnimation = GetDropshipIntroAnimation()
+
+	delaythread( GetAnimEventTime( DROPSHIP_MODEL, dropshipAnimation, "dropship_deploy" ) + 0.05 ) ClearDropshipSpawnPlayerList() // Clear out the players that are on this list after the window for spawning on the dropship has passed
 
 	file.dropshipSpawnTime = Time()
 
@@ -394,15 +397,15 @@ void function TryStartSpawnPlayersIntoDropship( array<entity> players )
 	array<entity> militiaSpawns = GetDropshipStartSpawnsForTeam( TEAM_MILITIA )
 	array<entity> imcSpawns = GetDropshipStartSpawnsForTeam( TEAM_IMC )
 
-	SpawnTeamPlayersIntoDropships( TEAM_MILITIA, militiaSpawns )
-	SpawnTeamPlayersIntoDropships( TEAM_IMC, imcSpawns )
+	SpawnTeamPlayersIntoDropships( TEAM_MILITIA, militiaSpawns, -1, dropshipAnimation )
+	SpawnTeamPlayersIntoDropships( TEAM_IMC, imcSpawns, -1, dropshipAnimation )
 
 	foreach ( entity player in players )
 		player.UnfreezeControlsOnServer()
 }
 
 // Taken from Angel City pretty much
-void function SpawnTeamPlayersIntoDropships( int team, array<entity> dropshipSpawns, int seatOverride = -1 )
+void function SpawnTeamPlayersIntoDropships( int team, array<entity> dropshipSpawns, int seatOverride = -1, string dropshipAnimation = "dropship_classic_mp_flyin" )
 {
 	array<FirstPersonSequenceStruct> idleAnims = []
 
@@ -502,7 +505,7 @@ void function SpawnTeamPlayersIntoDropships( int team, array<entity> dropshipSpa
 		idleAnims,
 		jumpAnims,
 		ship1Players,
-		"dropship_classic_mp_flyin",
+		dropshipAnimation,
 		seatOverride
 	)
 	thread SpawnDropshipAndPlayers(
@@ -513,7 +516,7 @@ void function SpawnTeamPlayersIntoDropships( int team, array<entity> dropshipSpa
 		idleAnims,
 		jumpAnims,
 		ship2Players,
-		"dropship_classic_mp_flyin",
+		dropshipAnimation,
 		seatOverride
 	)
 }
@@ -887,7 +890,7 @@ bool function DebugTestDropshipSpecificSpawn( int seat )
 		return false
 	}
 
-	SpawnTeamPlayersIntoDropships( team, spawns, seat )
+	SpawnTeamPlayersIntoDropships( team, spawns, seat, GetDropshipIntroAnimation() )
 
 	file.debugTestingSpawns = false
 
@@ -969,4 +972,18 @@ void function AddCallback_OnWaveSpawnDropshipSpawned( void functionref( entity, 
 	Assert( !svGlobal.onWaveSpawnDropshipSpawned.contains( callbackFunc ), "Already added " + name + " with AddCallback_OnWaveSpawnDropshipSpawned" )
 
 	svGlobal.onWaveSpawnDropshipSpawned.append( callbackFunc )
+}
+
+string function GetDropshipIntroAnimation()
+{
+	switch ( GetMapName() )
+	{
+		case "mp_complex3":
+			return "dropship_classic_mp_flyin_timeshift"
+
+		case "mp_grave":
+			return "dropship_classic_mp_flyin_grave"
+	}
+
+	return "dropship_classic_mp_flyin"
 }

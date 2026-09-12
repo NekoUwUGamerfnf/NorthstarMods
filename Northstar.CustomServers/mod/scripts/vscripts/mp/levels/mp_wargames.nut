@@ -12,14 +12,6 @@ struct
 
 void function CodeCallback_MapInit()
 {
-	PrecacheParticleSystem( FX_POD_SCREEN_IN )
-	PrecacheParticleSystem( $"P_pod_scan_laser_FP" )
-	PrecacheParticleSystem( $"P_pod_Dlight_console1" )
-	PrecacheParticleSystem( $"P_pod_Dlight_console2" )
-	PrecacheParticleSystem( $"P_pod_door_glow_FP" )
-
-	PrecacheModel( $"models/titans/ogre/ogreposeopen.mdl" )
-
 	AddCallback_EntitiesDidLoad( EntitiesDidLoad )
 
 	// dissolve effects
@@ -34,6 +26,14 @@ void function CodeCallback_MapInit()
 
 	if ( ShouldDoTrainingPodIntro() && !Flag( "ClassicMP_UsingCustomIntro" ) )
 	{
+		PrecacheParticleSystem( FX_POD_SCREEN_IN )
+		PrecacheParticleSystem( $"P_pod_scan_laser_FP" )
+		PrecacheParticleSystem( $"P_pod_Dlight_console1" )
+		PrecacheParticleSystem( $"P_pod_Dlight_console2" )
+		PrecacheParticleSystem( $"P_pod_door_glow_FP" )
+
+		PrecacheModel( $"models/titans/ogre/ogreposeopen.mdl" )
+
 		ClassicMP_SetIntroLevelSetupFunc( WargamesCanRunIntro )
 		ClassicMP_SetIntroPlayerSpawnFunc( WargamesIntroPlayerSpawn )
 		ClassicMP_SetPrematchSpawnPlayersFunc( WargamesIntroPrematchSpawnPlayers )

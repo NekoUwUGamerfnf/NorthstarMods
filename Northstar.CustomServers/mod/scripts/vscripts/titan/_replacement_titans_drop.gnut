@@ -465,12 +465,6 @@ bool function TitanFindDropNodes( FlightPath flightPath, vector baseOrigin, floa
 	if ( !EdgeTraceDropPoint( origin ) )
 		return false
 
-	if ( EntityInSolid( titan ) )
-		return false
-
-	if ( !NavMesh_IsPosReachableForAI( titan, origin ) )
-		return false
-
 	return true
 }
 
